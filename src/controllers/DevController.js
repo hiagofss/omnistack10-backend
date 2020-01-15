@@ -30,6 +30,12 @@ class DevController {
 
     return res.json(dev);
   }
+
+  async index(req, res) {
+    const devs = await DevSchema.find();
+
+    return res.json(devs);
+  }
 }
 
 module.exports = new DevController();
