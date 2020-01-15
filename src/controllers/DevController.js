@@ -38,7 +38,24 @@ class DevController {
     return res.json(devs);
   }
 
-  async update(req, res) {}
+  async update(req, res) {
+    const { github_username } = req.params;
+    const dev = await DevSchema.findOne({ github_username });
+
+    const { techs, latitude, longitude } = req.body;
+
+    const techsArray = parseStringAsArray(techs);
+
+    const updated = await dev.update({
+      techs: techsArray,
+      location: {
+        type: 'Point',
+        coordinates: [longitude, latitude],
+      },
+    });
+
+    return res.json(updated);
+  }
 
   async destroy(req, res) {
     const { github_username } = req.params;
