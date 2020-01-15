@@ -1,5 +1,6 @@
 const DevSchema = require('../schemas/Dev');
 const axios = require('axios');
+const parseStringAsArray = require('../utils/parseStringAsArray');
 
 class DevController {
   async create(req, res) {
@@ -14,7 +15,7 @@ class DevController {
 
       const { name = login, bio, avatar_url } = apiResponse.data;
 
-      const techsArray = techs.split(',').map(tech => tech.trim());
+      const techsArray = parseStringAsArray(techs);
       dev = await DevSchema.create({
         name,
         bio,
