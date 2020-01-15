@@ -37,6 +37,17 @@ class DevController {
 
     return res.json(devs);
   }
+
+  async update(req, res) {}
+
+  async destroy(req, res) {
+    const { github_username } = req.params;
+    const dev = await DevSchema.findOne({ github_username });
+
+    await dev.remove();
+
+    return res.json({ message: 'Dev excluido com sucesso' });
+  }
 }
 
 module.exports = new DevController();
